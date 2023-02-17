@@ -1,0 +1,25 @@
+.background-image{
+    background-image: url("../../assets/Login.background.jpg"); 
+    animation: background-image 30s ease infinite;
+  }
+  
+  /* @keyframes background-image {
+    0% {
+      transform: scale(1, 1);
+    }
+    50% {
+      transform: scale(1.2, 1.2);
+    }
+    100% {
+      transform: scale(1, 1);
+    }
+  } */
+  
+
+  .hodaText{
+    text-shadow:rgba(0, 0, 0, 0.295) 5px 5px 10px ;
+  }
+  .bookingText{
+    text-shadow:rgba(0, 0, 0, 0.295) 5px 5px 10px ;
+
+  }

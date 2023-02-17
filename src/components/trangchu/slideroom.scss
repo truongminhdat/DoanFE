@@ -1,0 +1,43 @@
+.text{
+    text-align: center;
+    color: black;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-weight: 600;
+
+}
+
+.section-body{
+    .section-customize{
+        padding: 20px 15px;
+        margin-left: 50px;     
+        .bg-image{
+            width: 285px;
+            height: 200px;
+           
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: #eee;
+            margin-bottom: 10px;
+            span{
+                color: rgb(15, 39, 221);
+            }
+        .img-src{
+            width: 285px;
+            height: 200px;
+            background-position: center center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            background-color: #eee;
+            margin-bottom: 10px;
+            border-radius: 10px;
+
+        }
+       
+        
+        }
+      
+    }
+  
+  }

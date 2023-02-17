@@ -1,0 +1,8 @@
+.fa-star{
+    color: yellow;
+}
+.del{
+text-decoration: line-through;
+color: rgb(64, 64, 64);
+font-size: 15px;
+}

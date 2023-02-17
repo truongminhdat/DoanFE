@@ -1,0 +1,37 @@
+.featured {
+  width: 100%;
+  max-width: 1024px;
+  display: flex;
+  justify-content: space-between;
+  position: relative;
+  gap: 20px;
+  z-index: 1;
+}
+.featuredTitles {
+  margin-top: 20px;
+  padding: 10px 10px;
+
+}
+
+.featuredImg{
+  margin-top: 10%;
+  position: relative;
+}
+.home-product-item_sale_off {
+  position: absolute;
+ width: 40px;
+ height: 36px;
+ top: 10%;
+ background-color: #df2a0a;
+ border-radius: 4%;
+}
+.font-mono{
+  text-decoration: line-through;
+}
+.discount{
+  font-size: 1.3rem;
+  line-height: 1.3rem;
+  color: white;
+  text-align: center
+}
+

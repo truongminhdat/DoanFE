@@ -122,7 +122,9 @@ useEffect(() => {
                     </div>
                 </div>
             </div>
-            <Footer/>
+             <div className="flex flex-start">
+             <Footer/>
+             </div>
         </div>
     )
 }

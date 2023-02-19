@@ -48,7 +48,7 @@ const Navbar = () => {
                          
                 <div className="navItems">
                  <>
-                 <button className="navButton">Register</button>
+                 <button className="navButton"><Link to="/register">Register</Link></button>
                
                <button className="navButton"><Link to="/login">Login</Link></button>
                  </>                    
@@ -57,10 +57,16 @@ const Navbar = () => {
             </div>
                 ):(
                     <>
-                    
+                    <div className="profile">
                     <Link to={`/profile/${id}`}>{email}</Link> 
                     <img className="image-profile" src={url}/>
+                    <span onClick={() => Logout()} className="logout">Logout</span>
+
                   
+
+                    </div>
+                    
+              
                     </>
                     
 

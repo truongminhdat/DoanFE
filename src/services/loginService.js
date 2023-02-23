@@ -17,3 +17,6 @@ export const updatePassword = (data) => {
 export const register = (data) => {
   return axiosClient.post(`/auth/signup`, data);
 };
+export const LoginAdmin = (data) => {
+  return axiosClient.post(`/admin/login`, data);
+};

@@ -1,9 +1,11 @@
 
+
 import './feature.css'
 import axios from "axios"
 import React, { useState, useEffect } from "react";
 import Formatprice from '../../helpers/FormatPrice';
 import { Link } from 'react-router-dom';
+import Slider from "react-slick";
 
 const Feature = () => {
     const [room, setRoom] = useState([]);
@@ -32,6 +34,7 @@ const Feature = () => {
     }
 
     return(
+    
        <div className="featured">
         {
              room.map((rooms) => (

@@ -15,7 +15,9 @@ import ListUser from "./admin/user/ListUser";
 import ListRoom from "./admin/room/Room";
 import EditCategories from "./admin/categories/EditCategories";
 import EditUser from "./admin/user/EditUser";
-
+import Orders from "./admin/orders/Order";
+import AdminLogin from "./admin/login/LoginAdmin";
+import Profile from "./page/authentation/profile/Profile";
 function Admin() {
   return (
     <BrowserRouter>
@@ -25,6 +27,8 @@ function Admin() {
           <Route path="room" element={<ListRoom />}></Route>
           <Route path="addRoom" element={<AddRoom />}></Route>
           <Route path="editRoom/:id" element={<EditRoom />}></Route>
+          <Route path="admin/login" element={<AdminLogin/>}></Route>
+          <Route path="/profile/:id" element={<Profile />}></Route>
           {/* <Route path="orders" element={<Room />}></Route> */}
 
           {/* <Route path="home" element={<Home />}></Route> */}
@@ -40,6 +44,7 @@ function Admin() {
           <Route path="role" element={<Role />}></Route>
           <Route path="roomtypeAdmin" element={<RoomTypeAdmin />}></Route>
           <Route path="adhotel" element={<AdHotel />}></Route>
+          <Route path="orders" element = {<Orders/>}></Route>
         </Route>
       </Routes>
     </BrowserRouter>

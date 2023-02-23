@@ -7,12 +7,12 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
 const FeatureProperty = () => {
-  const settings = {
+  var settings = {
     dots: true,
     infinite: true,
     speed: 500,
     slidesToShow: 1,
-    slidesToScroll: 1,
+    slidesToScroll: 1
   };
   const [users, setUsers] = useState([]);
 
@@ -31,6 +31,7 @@ const FeatureProperty = () => {
 
   return (
     <div className="fp">
+    
       {users.map((user) => (
         <div className="fpItem" key={user.id}>
           <img src={user.url} className="img-fluid" />

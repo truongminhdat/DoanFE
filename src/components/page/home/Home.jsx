@@ -15,10 +15,11 @@ const Home = () => {
 
             <Header/>
             <div className="homeContainer">
+            <h1 className="homeTitle">Loại Phòng Vip</h1>   
                 <Feature/>
-                <h1 className="homeTitle">Browser by property type</h1>
+                <h1 className="homeTitle">Loại phòng bình dân</h1>
                 <PropertyList/>
-                <h1 className="homeTitle">Homes guests love</h1>
+                <h1 className="homeTitle">Loại phòng thường</h1>
                 <FeatureProperty/>
                 <MailList/>
                 <Footer/>

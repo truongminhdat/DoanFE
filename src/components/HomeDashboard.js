@@ -1,8 +1,31 @@
-import React from "react";
+import React, { useState, useEffect} from "react";
 import { IoBagHandle, IoPieChart, IoPeople, IoCart } from "react-icons/io5";
 import Chart from "./Chart";
+import axios from "axios"
 
 export default function Dashboard() {
+  const [room, setRoom]  = useState("");
+  const [user, setUser] = useState("");
+  const [role, setRole] = useState("");
+  const [categories, setCategories] = useState("")
+  
+  useEffect(() => {
+    const fetchAllUser = async () => {
+      try {
+        let { data } = await axios.get(
+          `http://localhost:8001/admin/adminCount`
+        );
+        setRoom(data.room);
+        setUser(data.user);
+        setRole(data.role);
+        setCategories(data.categories);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchAllUser();
+  }, []);
+
   return (
     <>
       <div className="flex gap-4">
@@ -12,14 +35,13 @@ export default function Dashboard() {
           </div>
           <div className="pl-4">
             <span className="text-sm text-gray-500 font-light">
-              Total Sales
+              Categories
             </span>
             <div className="flex items-center">
               <strong className="text-xl text-gray-700 font-semibold">
-                $54232
+                {categories}
               </strong>
-              <span className="text-sm text-green-500 pl-2">+343</span>
-            </div>
+                          </div>
           </div>
         </BoxWrapper>
         <BoxWrapper>
@@ -28,13 +50,13 @@ export default function Dashboard() {
           </div>
           <div className="pl-4">
             <span className="text-sm text-gray-500 font-light">
-              Total Expenses
+              Room
             </span>
             <div className="flex items-center">
               <strong className="text-xl text-gray-700 font-semibold">
-                $3423
+                {room}
               </strong>
-              <span className="text-sm text-green-500 pl-2">-343</span>
+             
             </div>
           </div>
         </BoxWrapper>
@@ -44,13 +66,13 @@ export default function Dashboard() {
           </div>
           <div className="pl-4">
             <span className="text-sm text-gray-500 font-light">
-              Total Customers
+              Role
             </span>
             <div className="flex items-center">
               <strong className="text-xl text-gray-700 font-semibold">
-                12313
+                {role}
               </strong>
-              <span className="text-sm text-red-500 pl-2">-30</span>
+              
             </div>
           </div>
         </BoxWrapper>
@@ -60,13 +82,13 @@ export default function Dashboard() {
           </div>
           <div className="pl-4">
             <span className="text-sm text-gray-500 font-light">
-              Total Orders
+               User
             </span>
             <div className="flex items-center">
               <strong className="text-xl text-gray-700 font-semibold">
-                16432
+                {user}
               </strong>
-              <span className="text-sm text-red-500 pl-2">-43</span>
+              
             </div>
           </div>
         </BoxWrapper>

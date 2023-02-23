@@ -9,6 +9,7 @@ import SearchItem from "../searchItem/SearchItem";
 import { getCityHotel } from "../../../services/hotelService";
 import useFetch from "../../hooks/useFetch"
 import Logo from "../../../assets/hoteldanang.png"
+import axios from "../../../axios";
 
    
 
@@ -20,8 +21,34 @@ const List = () => {
   const [date, setDate] = useState(location.state.date)
   const [options, setOptions] = useState(location.state.options)
   const [openDate, setOpenDate] = useState(false);
+  const [keyword, setKeyword] = useState("");
+  const [room, setRoom] = useState("");
+  const [query, setQuery] = useState("");
+  const [msg, setMsg] = useState("");
 
-//   const [hotels, setHotels] = useState([]);
+
+  useEffect(() => {
+    const fetchAllUser = async () => {
+      try {
+        let { data } = await axios.get(
+          `http://localhost:8001/room/getAllRoomActionClient?&search=${keyword}`
+        );
+        setRoom(data.getAllRoom);
+        console.log("check data room", data)
+       
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    fetchAllUser();
+  }, [keyword]);
+ 
+  const searchData = (e) => {
+    e.preventDefault();
+   
+    setMsg("");
+    setKeyword(query);
+  };
 
 
 //   const fetch = useCallback(async () => {
@@ -55,7 +82,7 @@ const List = () => {
                     <input type="text" className="textItem" placeholder={destination}/>
                 </div>
                 <div className="lsItem">
-                    <label>Ngày đặt phòng</label>
+                    <label>Giá phòng</label>
                   <span onClick={()=> setOpenDate(!openDate)} className="clickSearch">{`${format(date[0].startDate,"MM/dd/yyyy")} to ${format(date[0].endDate, "MM/dd/yyyy")}`}</span>
                  { openDate && <DateRange onChange={(item)=> setDate([item.selection])}
                   minDate={new Date()}
@@ -112,37 +139,22 @@ const List = () => {
                 
             
                           
-         <div className='searchItem'> 
+  
          <div className='searchItem'>
+         {room.map((rooms) => (
+                <tr>
+                  <td>
+                    <img src={rooms.url} className="imgUser h-fit w-auto" />{" "}
+                  </td>
+                  <td>{rooms.title}</td>
+                  <td>{rooms.price}</td>
+                  <td>{rooms.discount}</td>
+                  <td>{rooms.category.name}</td>
+                  </tr>
+         ))}
             <img src={Logo} alt="" className='searchImg'/>
-            <div className='siDesc'>
-                <h1 className='siTitle'>
-                  Khach san
-                </h1>
-                <span className='siDistance'>Dai Minh</span>
-                <span className='siTaxiOp'>Free Aiport Taxi</span>
-                <span className='siSubtitle'>
-                    Studio Atta Hotel
-                </span>
-                <span className='siFeatures'>
-                    Entire studio . 1 bath room . 21m2 1 full bed
-                </span>
-                <span className='siCancelLop'>Free cancellation</span>
-                <span className='siCancelOpSubtitle'>
-                    You can cancel later,  so lock in this great to day!
-                </span>
-            </div>
-            <div className='siDetails'>
-                <div className='siRating'>
-                    <span>Đánh giá</span>
-                    <button>8.9</button>
-                </div>
-                <div className='siDetailTexts'>
-                    <span className='siPrice'>2000000</span>
-                    <span className='siTaxOp'>Includes Taxes and City</span>
-                    <button className='siCheckButton'>Đặt Phòng</button>
-                </div>
-            </div>
+           
+        
 
        
         </div>
@@ -158,7 +170,7 @@ const List = () => {
             </div>
         </div>
        </div>
-        </div>
+      
     )
 }
 export default List

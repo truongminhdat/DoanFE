@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { useState,useEffect, Fragment } from "react";
 import { Menu, Popover, Transition } from "@headlessui/react";
 import {
   HiOutlineBell,
@@ -7,9 +7,36 @@ import {
 } from "react-icons/hi";
 import { useNavigate } from "react-router-dom";
 import classNames from "classnames";
+import axios from "axios"
 
 export default function Header() {
   const navigate = useNavigate();
+  const [authState, setAuthState]  = useState(false);
+  const [email, setEmail] = useState('');
+  const [url,setUrl] = useState('');
+  const [id, setId] = useState('');
+  useEffect(() => {
+      axios.get('http://localhost:8001/admin/adminAuth',{
+          headers: {
+              accessToken: localStorage.getItem('adminToken')
+          }
+      }).then((response) => {
+        console.log(response)
+                      if(response.data.error){
+              setAuthState(false);
+          }else{
+              setAuthState(true);
+              setEmail(response.data.email);
+              setUrl(response.data.url);
+              setId(response.data.id)
+          }
+      })
+  })
+
+  const Logout = () => {
+      localStorage.removeItem('adminToken');
+      setAuthState(false)
+  }
 
   return (
     <div className="bg-white h-16 px-4 flex items-center border-b border-gray-200 justify-between">
@@ -59,7 +86,7 @@ export default function Header() {
             </>
           )}
         </Popover>
-        <Popover className="relative">
+        {/* <Popover className="relative">
           {({ open }) => (
             <>
               <Popover.Button
@@ -82,7 +109,7 @@ export default function Header() {
                 <Popover.Panel className="absolute right-0 z-10 mt-2.5 transform w-80">
                   <div className="bg-white rounded-sm shadow-md ring-1 ring-black ring-opacity-5 px-2 py-2.5">
                     <strong className="text-gray-700 font-medium">
-                      Notifications
+                      {email}
                     </strong>
                     <div className="mt-2 py-1 text-sm">
                       This is notification panel.
@@ -92,7 +119,7 @@ export default function Header() {
               </Transition>
             </>
           )}
-        </Popover>
+        </Popover> */}
         <Menu as="div" className="relative">
           <div>
             <Menu.Button className="ml-2 bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-neutral-400">
@@ -100,11 +127,11 @@ export default function Header() {
               <div
                 className="h-10 w-10 rounded-full bg-sky-500 bg-cover bg-no-repeat bg-center"
                 style={{
-                  backgroundImage:
-                    'url("https://source.unsplash.com/80x80?face")',
+                  backgroundImage:{url},
+                  
                 }}
               >
-                <span className="sr-only">Marc Backes</span>
+                <span className="sr-only">Trương Minh Đạt</span>
               </div>
             </Menu.Button>
           </div>
@@ -121,7 +148,7 @@ export default function Header() {
               <Menu.Item>
                 {({ active }) => (
                   <div
-                    onClick={() => navigate("/profile")}
+                    onClick={() => navigate(`/profile/${id}`)}
                     className={classNames(
                       active && "bg-gray-100",
                       "active:bg-gray-200 rounded-sm px-4 py-2 text-gray-700 cursor-pointer focus:bg-gray-200"
@@ -151,8 +178,9 @@ export default function Header() {
                       active && "bg-gray-100",
                       "active:bg-gray-200 rounded-sm px-4 py-2 text-gray-700 cursor-pointer focus:bg-gray-200"
                     )}
+                   
                   >
-                    Sign out
+                    <span onClick={Logout}>Sign out</span>
                   </div>
                 )}
               </Menu.Item>

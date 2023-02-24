@@ -1,7 +1,75 @@
-import React from "react";
+import React, {useState} from "react";
 import "./css/payment.css";
+import { useNavigate, useParams } from "react-router";
+import isEmail from 'validator/lib/isEmail';
+import isEmpty from "validator/lib/isEmpty";
+import axios from "axios"
 
-const payment = () => {
+const PayMent = () => {
+  const [ name, setName ] = useState('');
+  const [cardNumber, setCardNumber] = useState('');
+  const [date, setDate ] = useState('');
+  const [note, setNote]  = useState('');
+  const [validation, setValidation] = useState('');
+  const [msg, setMsg] = useState('');
+  const { id } = useParams();
+
+
+  const onChangeName = (event) => {
+    const value = event.target.value;
+    setName(value)
+}
+const onChangeCardNumber = (event) => {
+    const value = event.target.value;
+    setCardNumber(value)
+}
+const onChangeDate = (event) => {
+    const value = event.target.value;
+    setDate(value)
+}
+const onChangeNote = (event) => {
+  const value = event.target.value;
+  setNote(value)
+}
+
+const validateAll = () => {
+  const msg = {}
+  if (isEmpty(name)) {
+      msg.name = "Please input your name"
+  }
+  if (isEmpty(cardNumber)) {
+      msg.cardNumber = "Please input your password"
+  }
+  if(isEmpty(date)){
+    msg.date = "Please input date your date"
+  }
+  if(isEmpty(note)){
+    msg.note = "Please input your date"
+  } 
+  setValidation(msg);
+  if (Object.keys(msg).length > 0) return false;
+  return true;
+}
+const submitPayment = async(e) => {
+  e.preventDefault();
+  const isValid = validateAll();
+  if (!isValid) return true;
+
+  try{
+    let response = await axios.post('http://localhost:8001/payment/createpayment', {
+      name, cardNumber,date,note
+    })
+    if(response && response.status === 200){
+      alert("Thêm thành công!")
+    }
+
+  }catch(e){
+      if (e.response) {
+          setMsg(e.response.data.msg);
+      }
+  }
+
+}
   return (
     <>
       <div className="min-w-screen min-h-screen bg-gray-200 flex items-center justify-center px-5 pb-10 pt-16">
@@ -57,7 +125,9 @@ const payment = () => {
                 className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
                 placeholder="John Smith"
                 type="text"
+                onChange={onChangeName}
               ></input>
+               <p className='text-red-400 text-xs italic'>{validation.name}</p>
             </div>
           </div>
           <div className="mb-3">
@@ -67,7 +137,9 @@ const payment = () => {
                 className="w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md forcus:outline-none focus:border-indigo-500 transition-colors"
                 placeholder="0000 0000 0000 0000"
                 type="text"
+                onChange={onChangeCardNumber}
               ></input>
+                <p className='text-red-400 text-xs italic'>{validation.cardNumber}</p>
             </div>
           </div>
           <div className="-mx-2 flex items end">
@@ -76,7 +148,9 @@ const payment = () => {
                 Expiration date
               </label>
               <div>
-                <select class="form-select w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer">
+                <select className="form-select w-full px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors cursor-pointer"
+                onChange={onChangeDate}
+                >
                   <option value="01">01 - January</option>
                   <option value="02">02 - February</option>
                   <option value="03">03 - March</option>
@@ -114,12 +188,14 @@ const payment = () => {
                 className="w-32 px-3 py-2 mb-1 border-2 border-gray-200 rounded-md focus:outline-none focus:border-indigo-500 transition-colors"
                 placeholder="000"
                 type="text"
+                onChange={onChangeNote}
               ></input>
+              <p className='text-red-400 text-xs italic'>{validation.note}</p>
             </div>
           </div>
           <div>
             <button className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold">
-              <i className="mdi mdi-lock-outline mr-1">PAY NOW</i>
+              <i className="mdi mdi-lock-outline mr-1" onClick={submitPayment}>PAY NOW</i>
             </button>
           </div>
         </div>
@@ -128,4 +204,4 @@ const payment = () => {
   );
 };
 
-export default payment;
+export default PayMent;

@@ -5,9 +5,11 @@ import axios from "axios";
 import { data } from "autoprefixer";
 import { style } from "@mui/system";
 import { render } from "@testing-library/react";
+import { useNavigate } from "react-router";
 const Cart = () => {
   const [rooms, setRoom] = useState([]);
   const [count, setCount]  = useState("");
+  const navigate = useNavigate();
   
   var totalCartPrice = 0;
 
@@ -67,6 +69,9 @@ const Cart = () => {
       console.log(error);
     }
   };
+  const handleCheckout =async () => {
+    navigate('/payment')
+  }
 
  
     // updateCartQuantity(cart_id,"dec");
@@ -188,7 +193,7 @@ const Cart = () => {
                       new Intl.NumberFormat('vi-VN',{style: 'currency', currency: "VND"}).format(totalCartPrice)
                     }</span>
           </div>
-          <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full">Checkout</button>
+          <button className="bg-indigo-500 font-semibold hover:bg-indigo-600 py-3 text-sm text-white uppercase w-full" onClick={handleCheckout}>Checkout</button>
         </div>
       </div>
 

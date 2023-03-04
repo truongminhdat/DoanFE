@@ -55,11 +55,16 @@ const Feature = () => {
                       }
                     </span>
                     <span className='text-bs'>
-                        {Disprice(rooms.price, rooms.discount)}
+                    Giá Khuyến Mãi: {
+                        new Intl.NumberFormat("vi-VN",{
+                          style: "currency" , currency: "VND"
+                        }).format(rooms.price - ( rooms.price * rooms.discount  /100))
+                      } 
                     </span>
                   </div>
 
                   <div className="home-product-item_sale_off">
+                    
                       <span className="discount">{rooms.discount}%</span>
                       {/* <span className="text-2xl font-mono">
                       {Disprice(rooms.price, rooms.discount)}

@@ -11,7 +11,7 @@
     gap: 10px;
     position: relative;
 }
-.bookNow{
+/* .bookNow{
     position: absolute;
     top: 10px;
     right: 0;
@@ -22,7 +22,7 @@
     font-weight: bold;
     border-radius: 5px;
     cursor: pointer;
-}
+} */
 .hotelTitle{
     font-size: 24px;
     display: flex;

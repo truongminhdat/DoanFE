@@ -76,17 +76,17 @@ export default function Register() {
   
   return ( 
     <div>
-      <div className="background-image ">
+      <div >
         <div className="input-table backdrop-blur-[10px] flex flex-col items-center box-border min-h-screen pt-6 sm:justify-center sm:pt-0  ">
           <div className="mb-20 ">
             <a
               className="flex flex-col items-end hover:no-underline"
-              href="./trangchu"
+              href="./home"
             >
-              <h3 className="hodaText leading-[75px] text-9xl font-mono tracking-tighter  text-white">
-                HoDa
+              <h3 className="hodaText text-9xl  tracking-tighter  text-purple-700 ">
+                Hotel
               </h3>
-              <h4 className="bookingText text-3xl font-mono tracking-tighter text-white">
+              <h4 className="bookingText text-3xl  tracking-tighter text-purple-700 underline">
                 Booking
               </h4>
             </a>
@@ -308,7 +308,7 @@ export default function Register() {
                       className="file-input"
                       onChange={loadImage}
                     />
-                    <label className="label-upload" htmlFor="preViewImg">
+                    <label className=" text-purple-700" htmlFor="preViewImg">
                       Tải ảnh
                       <i className="fas fa-upload" />
                     </label>
@@ -327,14 +327,14 @@ export default function Register() {
 
               <div className="flex items-center justify-end mt-4">
                 <a
-                  className="text-sm text-gray-900 hover:text-slate-100 hover:bg-slate-900 hover:no-underline shadow-md px-4 py-1 rounded-lg hover:transition duration-100 ease-in-out hover:scale-105 "
+                  className="text-sm text-gray-900 hover:text-slate-100 hover:bg-purple-800 hover:no-underline shadow-md px-4 py-1 rounded-lg hover:transition duration-100 ease-in-out hover:scale-105 "
                   href="/login"
                 >
                   Already registered ?
                 </a>
                 <button
                   type="submit"
-                  className="inline-flex items-center w-50 h-10 px-4 py-2 ml-4 text-base font-semibold tracking-wide text-white uppercase transition duration-150 ease-in-out bg-gray-900 border border-transparent rounded-md active:bg-gray-900 false  hover:translate-y-1 hover:scale-110 hover:bg-cyan-900 "
+                  className="inline-flex items-center w-50 h-10 px-4 py-2 ml-4 text-base font-semibold tracking-wide text-white uppercase transition duration-150 ease-in-out bg-purple-700 border border-transparent rounded-md active:bg-gray-900 false  hover:translate-y-1 hover:scale-110 hover:bg-purple-900 "
                 >
                   Register
                 </button>

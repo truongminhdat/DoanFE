@@ -18,6 +18,7 @@ const Home = () => {
             <h1 className="homeTitle">Loại Phòng Vip</h1>   
                 <Feature/>
                 <h1 className="homeTitle">Loại phòng bình dân</h1>
+                <Feature/>
                 <PropertyList/>
                 <h1 className="homeTitle">Loại phòng thường</h1>
                 <FeatureProperty/>

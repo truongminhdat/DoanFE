@@ -15,12 +15,13 @@ export default function Register() {
               className="flex flex-col items-end hover:no-underline"
               href="./trangchu"
             >
-              <h3 className="hodaText leading-[75px] text-9xl font-mono tracking-tighter  text-white">
+              {/* <h3 className="  text-9xl   text-white">
                 HoDa
               </h3>
-              <h4 className="bookingText text-3xl font-mono tracking-tighter text-white">
+              <h4 className=" text-3xl font-mono tracking-tighter text-white">
                 Booking
-              </h4>
+              </h4> */}
+              <h1>Booking Hotel</h1>
             </a>
           </div>
           <div className="w-full px-6 py-4 mt-6 overflow-hidden bg-opacity-50 bg-white  shadow-lg sm:max-w-md sm:rounded-lg">

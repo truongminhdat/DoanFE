@@ -9,6 +9,7 @@ import Logo from "../../../assets/anhdalat.jpg"
 import './hotel.css'
 import Footer from "../footer/Footer";
 import '../footer/footer.css'
+import { AuthContext } from "../../helpers/AuthContext";
 const Hotel = () => {
     const [categories, setCategories] = useState([]);
     const [title, setTitle] = useState("");
@@ -23,6 +24,7 @@ const Hotel = () => {
     
     const [userId, setId] = useState('');
     const [address, setAddress] = useState("");
+   
     let navigate = useNavigate();
   
     useEffect(() => {
@@ -84,7 +86,7 @@ useEffect(() => {
             <Header type="list"/>
             <div className="hotelContainer">
                 <div className="hotelWrapper">
-                    <button onClick={Booking} className="bookNow">Đặt Phòng</button>
+                    
                     <h1 className="hotelTitle">Grand Hotel</h1>
                     <div className="hotelAddress">
                         <FontAwesomeIcon icon={faLocationDot}/>
@@ -93,19 +95,19 @@ useEffect(() => {
                     <span className="hotelDistance">
                         Excellent location  - 500m from center
                     </span>
-                    <span className="hotelPriceHightLight">
+                    <span className="hotelPriceHightLight font-bold text-3xl">
                         {
                             title
                         }
                     </span>
-                    <div className="hotelImages">
-                        <div className="hotelImgWrapper">
+                    <div className="hotelImages flex justify-center ">
+                        <div className="hotelImgWrapper w-3/4 h-auto">
                             <img src={preview} alt="" className="hotelImg"/>
                         </div>
                     </div>
-                    <div className="hotelDesc">
+                    <div className="hotelDesc flex justify-between">
                         <div className="hotelDetailsTexts">
-                            <h1 className="hotelTitle">
+                            <h1 className="hotelTitle font-bold">
                             Giá gốc:
                       {
                         new Intl.NumberFormat("vi-VN",{
@@ -117,12 +119,43 @@ useEffect(() => {
                                 {
                                     desc
                                 }
-                                                     </p>
+                            </p>
+                            <p className='text-bs'>
+                    Giá Khuyến Mãi: {
+                        new Intl.NumberFormat("vi-VN",{
+                          style: "currency" , currency: "VND"
+                        }).format(price - ( price * discount  /100))
+                      } 
+                    </p>
+                    
                         </div>
+                        <AuthContext.Provider value={{authState, setAuthState}}>
+                        {
+                          authState ? (
+                            <div className="flex items-center">
+                        <button onClick={Booking} className="bookNow bg-purple-700 px-3 py-3 text-xl text-white rounded-xl hover:bg-purple-900">Đặt Phòng</button>
+                        </div>
+
+                          ): (
+                            <>
+                            </>
+
+                          )
+                        }
+                        
+                       
+
+                        </AuthContext.Provider>
+                      
+                       
+                    
                     </div>
+                    
+                    
                 </div>
+                
             </div>
-             <div className="flex flex-start">
+             <div className="flex justify-center mt-5">
              <Footer/>
              </div>
         </div>

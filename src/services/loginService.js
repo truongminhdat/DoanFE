@@ -20,3 +20,6 @@ export const register = (data) => {
 export const LoginAdmin = (data) => {
   return axiosClient.post(`/admin/login`, data);
 };
+export const SendMail = (data) => {
+  return axiosClient.post(`/user/sendPassword`, data)
+}

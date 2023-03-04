@@ -4,6 +4,7 @@ import { useNavigate, useParams } from "react-router";
 import isEmail from 'validator/lib/isEmail';
 import isEmpty from "validator/lib/isEmpty";
 import axios from "axios"
+import { toast } from "react-toastify";
 
 const PayMent = () => {
   const [ name, setName ] = useState('');
@@ -12,7 +13,9 @@ const PayMent = () => {
   const [note, setNote]  = useState('');
   const [validation, setValidation] = useState('');
   const [msg, setMsg] = useState('');
-  const { id } = useParams();
+  const { id} = useParams();
+  const navigate = useNavigate();
+
 
 
   const onChangeName = (event) => {
@@ -57,10 +60,11 @@ const submitPayment = async(e) => {
 
   try{
     let response = await axios.post('http://localhost:8001/payment/createpayment', {
-      name, cardNumber,date,note
+      name, cardNumber,date,note, orderId: id
     })
     if(response && response.status === 200){
-      alert("Thêm thành công!")
+      toast.success('Thanh toán thành công')
+      navigate('/cart')
     }
 
   }catch(e){
@@ -82,6 +86,7 @@ const submitPayment = async(e) => {
               <i className="mdi mdi-credit-card-outline text-3xl"></i>
             </div>
           </div>
+          <p className="text-center font-bold text-xl">{msg}</p>
           <div className="mb-10">
             <h1 className="text-center font-bold text-xl uppercase">
               Secure payment info

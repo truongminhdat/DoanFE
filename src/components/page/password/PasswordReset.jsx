@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { ToastContainer,toast } from "react-toastify";
-import { sendPassword } from "../../../services/loginService";
+import axios from 'axios'
+import { SendMail, sendPassword } from "../../../services/loginService";
+
 const PasswordReset = () => {
     const [email,setEmail] = useState('');
     const setVal = (e) => {
@@ -9,10 +11,15 @@ const PasswordReset = () => {
     }
     const sendLink =async(e) => {
         e.preventDefault();
-        const rest = await sendPassword({
+        const rest = await SendMail({
             email
         })
-        console.log(rest);
+        if(rest && rest.status === 200){
+            toast.success('Gửi mail thành công!')
+        }else{
+            toast.error('Gửi mail thất bại!')
+        }
+       
 
 
     }
@@ -22,6 +29,7 @@ const PasswordReset = () => {
                 <h1 className="text-3xl font-semibold text-center text-purple-700 underline">
                     Enter your Email
                 </h1>
+                <ToastContainer />
 
                 <form className="mt-6"  onSubmit={sendLink}>
               
@@ -31,7 +39,6 @@ const PasswordReset = () => {
                             type="email"
                             name="email"
                             id="email"
-                            autoComplete='email'
                             placeholder="Email"
                             value={email}
                             onChange={setVal}

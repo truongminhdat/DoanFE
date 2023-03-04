@@ -6,63 +6,58 @@ import { useNavigate } from "react-router";
 import "bulma/css/bulma.css";
 import { Navigate } from "react-router";
 import { Link } from "react-router-dom";
+import { toast } from "react-toastify";
+
 const Orders = () => {
-  const [rooms, setRoom] = useState([]);
-  const [page, setPage] = useState(0);
-  const [limit, setLimit] = useState(5);
-  const [pages, setPages] = useState(0);
-  const [rows, setRow] = useState(0);
-  const [query, setQuery] = useState("");
-  const [keyword, setKeyword] = useState("");
-  const [msg, setMsg] = useState("");
+  const [order, setOrders] = useState([]);
+  const [email, setEmail] = useState("")
+   const [msg, setMsg] = useState("");
   let navigate = useNavigate();
+
+
+
+  const handleSendMail = async (id) => {
+    let data = await axios.get(`http://localhost:8001/order/getByIdOrder/?id=${id}`);
+    setEmail(data.data.getByIdOrder.user.email)
+    
+
+
+    let sendMail = await axios.post(`http://localhost:8001/order/sendMail/`, {
+    email
+    })
+    if(sendMail && sendMail.status === 200) {
+      toast.success('Gửi mail thành công!'); 
+    }
+    else {
+      toast.error('Gửi mail thất bại')
+    }
+   
+  }
 
   useEffect(() => {
     const fetchAllUser = async () => {
       try {
         let { data } = await axios.get(
-          `http://localhost:8001/room/getAllRoom?page=${page}&limit=${limit}&search=${keyword}`
+          `http://localhost:8001/order/getallorder`
         );
-        setRoom(data.getAllRoom);
-        setLimit(data.limit);
+        
+         setOrders(data.data)
 
-        setPages(data.totalPage);
-        setRow(data.totalRows);
       } catch (error) {
         console.log(error);
       }
     };
     fetchAllUser();
-  }, [page, keyword]);
-  const handlePageClick = ({ selected }) => {
-    setPage(selected);
-  };
-  const searchData = (e) => {
-    e.preventDefault();
-    setPage(0);
-    setMsg("");
-    setKeyword(query);
-  };
-  const AddRoom = () => {
-    navigate("/addroom");
-  };
+  }, []);
+  
+  
+   
 
-  const handleDelete = async (id) => {
-    try {
-      await axios.delete(
-        `http://localhost:8001/room/deleteroom/?id=${id}`
-      );
-      window.location.reload();
-    } catch (error) {
-      console.log(error);
-    }
-  };
+
+
 
   return (
     <div className="container mt-5">
-      <button className="button is-info mb-5" onClick={AddRoom}>
-        Add Room
-      </button>
       <div className="columns">
         <div className="column is-centered">
           <form>
@@ -87,32 +82,50 @@ const Orders = () => {
             <thead>
               <tr>
                 <th>Image</th>
+                <th>User</th>
                 <th>Title</th>
                 <th>Price</th>
                 <th>Discount</th>
-                <th>Categories</th>
+                <th>status</th>
                 <th>Action</th>
               </tr>
             </thead>
             <tbody>
-              {rooms.map((room) => (
+              {order.map((items) => (
                 <tr>
                   <td>
-                    <img src={room.url} className="imgUser h-fit w-auto" />{" "}
+                    <img src={items.room.url} className="imgUser h-fit w-auto" />{" "}
                   </td>
-                  <td>{room.title}</td>
-                  <td>{room.price}</td>
-                  <td>{room.discount}</td>
-                  <td>{room.category.name}</td>
+                  <td>{items.user.username}</td>
+                  <td>{items.address}</td>
+                  <td>
+                  {
+                      new Intl.NumberFormat('vi-VN',{style: 'currency', currency: "VND"}).format(items.room.price)
+                    }
+                  </td>
+                  <td>
+                    
+                      {
+                        new Intl.NumberFormat("vi-VN",{
+                          style: "currency" , currency: "VND"
+                        }).format(items.room.price - ( items.room.price * items.room.discount  /100))
+                      } 
+                                       
+                    
+                  </td>
+                  <td>
+                    {items.status === "0" ? "Chưa thanh toán": "Đã thanh toán"}
+                  </td>
+               
 
                   <td>
-                    <button >
-                      <Link className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 border border-blue-700 rounded" to={`/editRoom/${room.id}`}>Edit</Link>
-                    </button>
+                   
                     <button 
-                    onClick={() => handleDelete(room.id)}
-                    className="ml-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 border border-blue-700 rounded">
-                      Delete
+                 
+                    className="ml-5 bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 border border-blue-700 rounded"
+                    onClick={() => handleSendMail(items.id)}
+                    >
+                      Send mail
                     </button>
                   </td>
                 </tr>
@@ -120,28 +133,9 @@ const Orders = () => {
             </tbody>
           </table>
           <p>
-            Total Rows:{rows} Pages:{rows ? page + 1 : 0} of {pages}
+          
           </p>
 
-          <nav
-            className="pagination is-centered"
-            key={rows}
-            role="navigation"
-            aria-label="pagination"
-          >
-            <ReactPaginate
-              previousLabel={"< Prev"}
-              nextLabel={"Next >"}
-              pageCount={Math.min(10, pages)}
-              onPageChange={handlePageClick}
-              containerClassName={"pagination-list"}
-              pageLinkClassName={"pagination-link"}
-              previousLinkClassName={"pagination-previous"}
-              nextLinkClassName={"pagination-next"}
-              activeLinkClassName={"pagination-link is-current"}
-              disabledLinkClassName={"pagination-link is-disabled"}
-            />
-          </nav>
         </div>
       </div>
     </div>

@@ -37,8 +37,8 @@ const Navbar = () => {
         <div className="navbar">
             <div className="navContainer">
                 <div className="logoContainer">
-                <Link to="/" style={{color:"inherit", textDecoration:"none"}}>
-                <span className="logo">Hotel Booking</span>
+                <Link to="/home" style={{color:"inherit", textDecoration:"none"}}>
+                <span className="logo text-2xl font-bold ">Hotel Booking</span>
                 </Link>
                 </div>
               

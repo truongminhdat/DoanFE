@@ -23,3 +23,6 @@ export const LoginAdmin = (data) => {
 export const SendMail = (data) => {
   return axiosClient.post(`/user/sendPassword`, data)
 }
+export const thongke = async (data) => {
+  return await axiosClient.get(`/thongke/getThongke`,data)
+}

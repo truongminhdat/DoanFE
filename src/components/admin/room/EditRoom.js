@@ -56,7 +56,7 @@ const EditRoom = () => {
     };
     fetchAllCategories();
   }, []);
-   z
+
   const updateRoom = async (e) => {
     e.preventDefault();
     const formData = new FormData();
